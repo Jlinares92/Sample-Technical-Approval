@@ -362,41 +362,35 @@ canvas{display:block;touch-action:none;}
       <div class="field" style="margin-top:20px;">
         <label>Photo references (attach approved sample photos)</label>
         <div class="photo-grid" id="photoGrid">
-          <div class="photo-slot" id="slot0">
-            <input type="file" accept="image/*" onchange="loadPhoto(0,this)">
+          <div class="photo-slot" id="slot0" onclick="triggerPhoto(0)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 1</span>
-            <img id="img0" style="display:none;">
+            <img id="img0" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div class="photo-slot" id="slot1">
-            <input type="file" accept="image/*" onchange="loadPhoto(1,this)">
+          <div class="photo-slot" id="slot1" onclick="triggerPhoto(1)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 2</span>
-            <img id="img1" style="display:none;">
+            <img id="img1" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div class="photo-slot" id="slot2">
-            <input type="file" accept="image/*" onchange="loadPhoto(2,this)">
+          <div class="photo-slot" id="slot2" onclick="triggerPhoto(2)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 3</span>
-            <img id="img2" style="display:none;">
+            <img id="img2" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div class="photo-slot" id="slot3">
-            <input type="file" accept="image/*" onchange="loadPhoto(3,this)">
+          <div class="photo-slot" id="slot3" onclick="triggerPhoto(3)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 4</span>
-            <img id="img3" style="display:none;">
+            <img id="img3" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div class="photo-slot" id="slot4">
-            <input type="file" accept="image/*" onchange="loadPhoto(4,this)">
+          <div class="photo-slot" id="slot4" onclick="triggerPhoto(4)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 5</span>
-            <img id="img4" style="display:none;">
+            <img id="img4" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
-          <div class="photo-slot" id="slot5">
-            <input type="file" accept="image/*" onchange="loadPhoto(5,this)">
+          <div class="photo-slot" id="slot5" onclick="triggerPhoto(5)">
             <svg class="photo-slot__icon" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1"><rect x="2" y="4" width="16" height="13"/><circle cx="10" cy="10.5" r="3"/><path d="M7 4l1.5-2.5h3L13 4"/></svg>
             <span class="photo-slot__label">Photo 6</span>
-            <img id="img5" style="display:none;">
+            <img id="img5" style="display:none;position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
           </div>
         </div>
       </div>
@@ -564,18 +558,27 @@ function getToggle(toggleId) {
 }
 
 // ── PHOTOS ────────────────────────────────────────────────────────────────────
-function loadPhoto(idx, input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = e => {
-    photoData[idx] = e.target.result;
-    const img = document.getElementById(`img${idx}`);
-    img.src = e.target.result;
-    img.style.display = 'block';
-    document.getElementById(`slot${idx}`).classList.add('has-image');
-  };
-  reader.readAsDataURL(file);
+function triggerPhoto(idx) {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  input.style.display = 'none';
+  document.body.appendChild(input);
+  input.addEventListener('change', function() {
+    const file = input.files[0];
+    if (!file) { document.body.removeChild(input); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      photoData[idx] = e.target.result;
+      const img = document.getElementById('img' + idx);
+      img.src = e.target.result;
+      img.style.display = 'block';
+      document.getElementById('slot' + idx).classList.add('has-image');
+      try { document.body.removeChild(input); } catch(e) {}
+    };
+    reader.readAsDataURL(file);
+  });
+  input.click();
 }
 
 // ── SIGNATURE ─────────────────────────────────────────────────────────────────
@@ -814,9 +817,9 @@ function resetApp() {
   clearSig();
   Object.keys(photoData).forEach(k => delete photoData[k]);
   for (let i = 0; i < 6; i++) {
-    const img = document.getElementById(`img${i}`);
+    const img = document.getElementById('img' + i);
     if (img) { img.src = ''; img.style.display = 'none'; }
-    const slot = document.getElementById(`slot${i}`);
+    const slot = document.getElementById('slot' + i);
     if (slot) slot.classList.remove('has-image');
   }
   showStep(1);

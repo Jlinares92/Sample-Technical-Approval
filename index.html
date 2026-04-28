@@ -231,16 +231,15 @@ canvas{display:block;touch-action:none;}
           <label>Season</label>
           <select id="season">
             <option value="">Select</option>
-            <option value="SS25">SS25</option>
-            <option value="FW25">FW25</option>
-            <option value="SS26">SS26</option>
             <option value="FW26">FW26</option>
             <option value="SS27" selected>SS27</option>
             <option value="FW27">FW27</option>
+            <option value="SS28">SS28</option>
+            <option value="FW28">FW28</option>
           </select>
         </div>
         <div class="field">
-          <label>Construction</label>
+          <label>Type of construction</label>
           <select id="construction">
             <option value="">Select</option>
             <option>Cementing</option>
@@ -253,6 +252,11 @@ canvas{display:block;touch-action:none;}
             <option>Injected</option>
           </select>
         </div>
+      </div>
+
+      <div class="field">
+        <label>Construction</label>
+        <input type="text" id="constructionDetail" placeholder="Describe the construction...">
       </div>
 
       <div class="field-row">
@@ -284,6 +288,7 @@ canvas{display:block;touch-action:none;}
           <option>Quality Manager</option>
           <option>Head of Production</option>
           <option>QM + Head of Production</option>
+          <option>Trader</option>
         </select>
       </div>
     </div>
@@ -644,6 +649,7 @@ function collectData() {
     modelRef:     document.getElementById('modelRef').value,
     season:       document.getElementById('season').value,
     construction: document.getElementById('construction').value,
+    constructionDetail: document.getElementById('constructionDetail').value,
     trader:       document.getElementById('trader').value,
     factory:      document.getElementById('factory').value,
     lastRef:      document.getElementById('lastRef').value,
@@ -722,7 +728,8 @@ function renderReview() {
       <div class="summary-block-title">Model</div>
       <div class="summary-row"><span class="key">Name / ref.</span><span>${data.modelName} ${data.modelRef}</span></div>
       <div class="summary-row"><span class="key">Season</span><span>${data.season}</span></div>
-      <div class="summary-row"><span class="key">Construction</span><span>${data.construction}</span></div>
+      <div class="summary-row"><span class="key">Type of construction</span><span>${data.construction}</span></div>
+      <div class="summary-row"><span class="key">Construction</span><span>${data.constructionDetail}</span></div>
       <div class="summary-row"><span class="key">Trader</span><span>${data.trader}</span></div>
       <div class="summary-row"><span class="key">Factory</span><span>${data.factory}</span></div>
       <div class="summary-row"><span class="key">Last ref.</span><span>${data.lastRef}</span></div>

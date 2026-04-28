@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
-<title>HOFF PTD</title>
+<title>HOFF STA</title>
 <link rel="stylesheet" href="https://use.typekit.net/ifm1wpz.css">
 <style>
 :root {
@@ -201,7 +201,7 @@ canvas{display:block;touch-action:none;}
       <path d="M265,0h-95c-13,0-20,7-20,20v40c0,13,7,20,20,20h95c13,0,20-7,20-20V20c0-13-7-20-20-20ZM255,60h-75V20h75v40Z"/>
       <polygon points="565 20 565 0 445 0 445 80 475 80 475 60 565 60 565 40 475 40 475 20 565 20"/>
     </svg>
-    <span class="app-bar__step" id="stepLabel">PTD — 1 / 6</span>
+    <span class="app-bar__step" id="stepLabel">STA — 1 / 6</span>
   </div>
 
   <!-- PROGRESS -->
@@ -424,10 +424,10 @@ canvas{display:block;touch-action:none;}
     <div class="success-icon">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10l4 4 8-8"/></svg>
     </div>
-    <div class="success-title">PTD submitted</div>
+    <div class="success-title">STA submitted</div>
     <div class="success-sub">Saved to SharePoint and logged in the master Excel.<br>A PDF copy has been generated.</div>
     <div class="success-path" id="savedPath"></div>
-    <button class="btn" onclick="resetApp()">New PTD</button>
+    <button class="btn" onclick="resetApp()">New STA</button>
   </div>
 
   <!-- BOTTOM NAV -->
@@ -609,10 +609,10 @@ function sigIsEmpty() { return !_sigHasContent; }
 // ── NAVIGATION ────────────────────────────────────────────────────────────────
 function updateNav() {
   const isLast = currentStep === TOTAL_STEPS;
-  document.getElementById('stepLabel').textContent = `PTD — ${currentStep} / ${TOTAL_STEPS}`;
+  document.getElementById('stepLabel').textContent = `STA — ${currentStep} / ${TOTAL_STEPS}`;
   document.getElementById('progressFill').style.width = `${(currentStep / TOTAL_STEPS) * 100}%`;
   document.getElementById('btnBack').style.display = currentStep > 1 ? 'block' : 'none';
-  document.getElementById('btnNext').textContent = isLast ? 'Submit PTD' : 'Continue';
+  document.getElementById('btnNext').textContent = isLast ? 'Submit STA' : 'Continue';
 }
 
 function showStep(n) {
@@ -704,7 +704,7 @@ function buildPath() {
   const trader = document.getElementById('trader').value || 'Unknown';
   const date = new Date().toISOString().slice(0, 10);
   const modelFull = ref ? `${model}_${ref}` : model;
-  return `Quality/PTD/${construction}/${season}/${trader}/${modelFull}_PTD_${date}`;
+  return `Quality/STA/${construction}/${season}/${trader}/${modelFull}_STA_${date}`;
 }
 
 // ── REVIEW ────────────────────────────────────────────────────────────────────
